@@ -4,27 +4,31 @@ import xml.etree.ElementTree as ET
 import sqlite3
 import datetime
 
-req = urllib.request.urlopen('http://blog.fefe.de/rss.xml')
-#print(req.read().decode('utf-8'))
-tree = ET.parse(req)
-root = tree.getroot()
-conn = sqlite3.connect('news.db')
-c = conn.cursor()
 
-vorher = c.execute('''SELECT count(uid) FROM fefe''').fetchone()[0]
+def main():
+    req = urllib.request.urlopen('http://blog.fefe.de/rss.xml')
+    #print(req.read().decode('utf-8'))
+    tree = ET.parse(req)
+    root = tree.getroot()
+    conn = sqlite3.connect('news.db')
+    c = conn.cursor()
 
-for child in root[0].findall('item'):
-    #print(child[0].text, child[1].text)
+    vorher = c.execute('''SELECT count(uid) FROM fefe''').fetchone()[0]
 
-    if not c.execute("select uid from fefe where uid=:id",
-         {"id": child[1].text}).fetchone():
-        c.execute('insert into fefe values (?,?,?)', (child[1].text,
-         child[0].text, datetime.datetime.today()))
-conn.commit()
+    for child in root[0].findall('item'):
+        #print(child[0].text, child[1].text)
 
-nachher = c.execute('''SELECT count(uid) FROM fefe''').fetchone()[0]
+        if not c.execute("select uid from fefe where uid=:id",
+             {"id": child[1].text}).fetchone():
+            c.execute('insert into fefe values (?,?,?)', (child[1].text,
+             child[0].text, datetime.datetime.today()))
+    conn.commit()
 
-print(('Anzahl neuer Elemente: ' + str(nachher - vorher)))
+    nachher = c.execute('''SELECT count(uid) FROM fefe''').fetchone()[0]
 
-c.close()
+    print(('Anzahl neuer Elemente: ' + str(nachher - vorher)))
 
+    c.close()
+
+if __name__ == '__main__':
+    main()
