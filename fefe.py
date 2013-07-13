@@ -24,7 +24,7 @@ conn.commit()
 
 nachher = c.execute('''SELECT count(uid) FROM fefe''').fetchone()[0]
 
-print('Anzahl neuer Elemente: ' + str(nachher - vorher))
+print(('Anzahl neuer Elemente: ' + str(nachher - vorher)))
 
 c.close()
 
