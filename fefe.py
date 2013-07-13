@@ -2,7 +2,7 @@
 import urllib.request
 import xml.etree.ElementTree as ET
 import sqlite3
-import datetime
+import time
 
 
 def main():
@@ -21,7 +21,7 @@ def main():
         if not c.execute("select uid from fefe where uid=:id",
              {"id": child[1].text}).fetchone():
             c.execute('insert into fefe values (?,?,?)', (child[1].text,
-             child[0].text, datetime.datetime.today()))
+             child[0].text, int(time.time())))
     conn.commit()
 
     nachher = c.execute('''SELECT count(uid) FROM fefe''').fetchone()[0]
