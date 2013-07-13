@@ -7,7 +7,7 @@ import time
 def ausgabeEinItem(text):
     for char in text:
         print(char, end='',flush=True)
-        time.sleep(0.001)
+        time.sleep(0.03)
 
 
 def main():
@@ -22,9 +22,7 @@ def main():
         #print((row[0]))
         ausgabeEinItem(row[0])
         print('\n', flush=True)
-        time.sleep(5)
+        time.sleep(10)
 
 if __name__ == '__main__':
     main()
-
-
