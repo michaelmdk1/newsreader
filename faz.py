@@ -4,6 +4,7 @@ import xml.etree.ElementTree as ET
 import sqlite3
 import time
 
+
 def main():
     req = urllib.request.urlopen('http://www.faz.net/rss/aktuell/')
     #print(req.read().decode('utf-8'))

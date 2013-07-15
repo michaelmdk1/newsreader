@@ -3,15 +3,19 @@
 import sqlite3
 import time
 
+
 def printSlowly(text):
     for char in text:
         print(char, end='',flush=True)
         time.sleep(0.03)
-def ausgabeItem(text, text2 = False):
+
+
+def ausgabeItem(text, text2=False):
     printSlowly(text)
     if text2:
         print()
         printSlowly(text2)
+
 
 def main():
     conn = sqlite3.connect('news.db')
@@ -32,7 +36,7 @@ def main():
 
     for row in liste:
         #print((row[0]))
-        ausgabeItem(row[0],row[1])
+        ausgabeItem(row[0], row[1])
         print('\n', flush=True)
         time.sleep(10)
 
